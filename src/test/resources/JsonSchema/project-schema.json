@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Project",
+    "description":"A single Project",
+    "type": "object",
+    "required": ["name", "displayName", "description", "teamMembers"],
+    "additionalProperties":false,
+    "properties": {
+        "url": {
+            "description": "Self URL",
+            "type": "string"
+        },
+        "name": {
+            "description": "The unique project name",
+            "type": "string"
+        },
+        "displayName": {
+            "description": "Project display name",
+            "type": "string"
+        },
+        "description": {
+            "description": "Project description",
+            "type": "string"
+        },
+        "teamMembers": {
+            "description":"List people on this project",
+            "type": "array",
+            "items":{
+                "type":"string"
+            }
+        }
+       
+   }     
+}

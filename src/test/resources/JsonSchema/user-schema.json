@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "User",
+    "description":"A single user",
+    "type": "object",
+    "required": ["name", "roles"],
+    "additionalProperties":false,
+    "properties": {
+        "name": {
+            "description": "The unique user name",
+            "type": "string"
+        },
+        "roles": {
+            "description":"List of roles this user has",
+            "type": "array",
+            "items":{
+                "type":"string",
+                "enum":["ADMIN", "PROJECT_ADMIN", "USER"]
+            }
+        }
+   }     
+}

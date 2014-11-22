@@ -1,4 +1,4 @@
-package org.mikehake.jbehave;
+package jbehave;
 
 import net.thucydides.jbehave.ThucydidesJUnitStories;
 
