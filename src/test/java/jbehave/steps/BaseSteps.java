@@ -1,4 +1,7 @@
 package jbehave.steps;
+import com.jayway.restassured.response.Response;
+
+import model.Credentials;
 import net.thucydides.core.Thucydides;
 
 
@@ -23,5 +26,45 @@ public class BaseSteps {
      */
     protected Object retrieve(String key) {
         return Thucydides.getCurrentSession().get(key);
+    } 
+    
+    /**
+     * Convenience method since we do this so often
+     * @return stored credentials
+     */
+    protected Credentials getCurrentCredentials(){
+        Credentials creds = (Credentials)retrieve(STORED_CREDENTIALS);
+        if(creds==null){
+            throw new RuntimeException("Error, attempt to get saved credentials when none have been saved");
+        }
+        return creds;
+    }
+    
+   /**
+    * Convenience method since we do this so often
+    * @return stored credentials
+    */
+   protected void setCurrentCredentials(Credentials creds){
+       store(STORED_CREDENTIALS,creds);
+   }
+    
+    /**
+     * Convenience method since we do this so often
+     * @return last saved Response
+     */
+    protected Response getLastResponse(){
+        Response response = (Response) retrieve(STORED_RESPONSE);
+        if(response==null){
+            throw new RuntimeException("Error, attempt to get last Response when non has been saved");
+        }
+        return response;
+    }
+    
+    /**
+     * Convenience method since we do this so often
+     * @return stored credentials
+     */
+    protected void setLastResponse(Response response){
+        store(STORED_RESPONSE,response);
     }
 }

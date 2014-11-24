@@ -14,12 +14,12 @@ public class CommonSteps extends BaseSteps {
     @Given("using credentials $user:$password")
     public void usingCredentials(@Named("user") String user, @Named("password") String password) {
         Credentials creds = new Credentials(user,password);
-        store(STORED_CREDENTIALS,creds);
+        setCurrentCredentials(creds);
     }
     
     @Then("the response status code is $status")
     public void thenResponseStatusIs(@Named("status") int status) {
-        Response response = (Response) retrieve(STORED_RESPONSE);
+        Response response = getLastResponse();
         Assert.assertEquals(status, response.getStatusCode());
     }
 }
