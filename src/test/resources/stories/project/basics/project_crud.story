@@ -5,7 +5,7 @@ Given using credentials admin:secret
 And the project TestProject1 does not exist
 When project TestProject1 is created (POST)
 Then the response status code is 201
-And a GET can be performed to retrieve project TestProject1
+And the response body conforms to schema schema/project-schema.json
 
 Scenario: Project - DELETE project as global admin
 Given using credentials admin:secret

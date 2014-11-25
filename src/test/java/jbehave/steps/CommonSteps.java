@@ -1,5 +1,6 @@
 package jbehave.steps;
 
+import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import model.Credentials;
 
 import org.jbehave.core.annotations.Given;
@@ -24,5 +25,11 @@ public class CommonSteps extends BaseSteps {
     public void thenResponseStatusIs(@Named("status") int status) {
         Response response = getLastResponse();
         Assert.assertEquals(status, response.getStatusCode());
+    }
+    
+    @Then("the response body conforms to schema $schema")
+    public void thenVerifySchema(@Named("schema") String schema) {
+        Response response = getLastResponse();
+        response.then().assertThat().body(matchesJsonSchemaInClasspath(schema));
     }
 }

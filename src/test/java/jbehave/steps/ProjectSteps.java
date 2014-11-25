@@ -35,14 +35,6 @@ public class ProjectSteps extends BaseSteps {
         setLastResponse(response);
     }
     
-    @Then("a GET can be performed to retrieve project $name")
-    public void thenVerifyProject(@Named("name") String name) {
-        Response response = projectService.getProject(name, getCurrentCredentials());
-        setLastResponse(response);
-        response.then().assertThat().statusCode(200);
-        response.then().assertThat().body(matchesJsonSchemaInClasspath("JsonSchema/project-schema.json"));
-    }
-    
     @Given("the project $name does not exist")
     public void givenProjectDoesNotExist(@Named("name") String name) {
         projectUtils.ensureProjectDoesNotExist(name, getCurrentCredentials());
