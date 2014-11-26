@@ -18,7 +18,7 @@ private String apiUrl;
     }
     
     /**
-     * GET /project/{projectName}/task/{id}
+     * GET /projects/{projectName}/tasks/{id}
      */
     public Response getProjectTask(String projectName, String taskId, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -27,7 +27,7 @@ private String apiUrl;
     }
     
     /**
-     * GET /project/{projectName}/task/
+     * GET /projects/{projectName}/tasks/
      */
     public Response getProjectTaskList(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -36,7 +36,7 @@ private String apiUrl;
     }
     
     /**
-     * POST /project/{projectName}/task/
+     * POST /projects/{projectName}/tasks/
      */
     public Response postProjectTask(String projectName, Task task, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -49,12 +49,12 @@ private String apiUrl;
     
     /**
      * helper method to create the end url of:
-     * /project/{projectName}/task/{memberName}
+     * /projects/{projectName}/tasks/{memberName}
      */
     private String buildURLString(String projectName, String taskId){
         StringBuilder builder = new StringBuilder(apiUrl);
         builder.append(projectName);
-        builder.append("/task/");
+        builder.append("/tasks/");
         if(taskId!=null){
             builder.append(taskId);
         }

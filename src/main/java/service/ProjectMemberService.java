@@ -16,7 +16,7 @@ public class ProjectMemberService {
     }
     
     /**
-     * PUT /project/{projectName}/member/{memberName}
+     * PUT /projects/{projectName}/members/{memberName}
      */
     public Response putMemberToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -25,7 +25,7 @@ public class ProjectMemberService {
     }
     
     /**
-     * POST /project/{projectName}/member/{memberName}
+     * POST /projects/{projectName}/members/{memberName}
      */
     public Response postMemberToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -34,7 +34,7 @@ public class ProjectMemberService {
     }
     
     /**
-     * DELETE /project/{projectName}/member/{memberName}
+     * DELETE /projects/{projectName}/members/{memberName}
      */
     public Response deleteMemberFromProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -43,7 +43,7 @@ public class ProjectMemberService {
     }
     
     /**
-     * GET /project/{projectName}/member/
+     * GET /projects/{projectName}/members/
      */
     public Response getAllMembersOnProject(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -54,12 +54,12 @@ public class ProjectMemberService {
     
     /**
      * helper method to create the end url of:
-     * /project/{projectName}/member/{memberName}
+     * /projects/{projectName}/members/{memberName}
      */
     private String buildURLString(String projectName, String memberName){
         StringBuilder builder = new StringBuilder(apiUrl);
         builder.append(projectName);
-        builder.append("/member/");
+        builder.append("/members/");
         if(memberName!=null){
             builder.append(memberName);
         }

@@ -17,7 +17,7 @@ public class Constants {
     public static String USER5 = "user5";
     
     public static String BASE_URL = "http://localhost:8080/jee-example-task-app/v1/";
-    public static String USER_URL = BASE_URL + "user/";
-    public static String PROJECT_URL = BASE_URL + "project/";
+    public static String USER_URL = BASE_URL + "users/";
+    public static String PROJECT_URL = BASE_URL + "projects/";
    
 }

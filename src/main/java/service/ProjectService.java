@@ -18,7 +18,7 @@ public class ProjectService {
     }
     
     /**
-     * GET /project/{name}
+     * GET /projects/{name}
      */
     public Response getProject(String name, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -27,7 +27,7 @@ public class ProjectService {
     }
     
     /**
-     * GET /project/
+     * GET /projects/
      */
     public Response getProjectList(Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -36,7 +36,7 @@ public class ProjectService {
     }
     
     /**
-     * POST /project/{name}
+     * POST /projects/{name}
      */
     public Response postProject(String name, Project project, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -46,7 +46,7 @@ public class ProjectService {
     }
     
     /**
-     * PUT /project/{name}
+     * PUT /projects/{name}
      */
     public Response putProject(String name, Project project, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
@@ -56,7 +56,7 @@ public class ProjectService {
     }
     
     /**
-     * DELETE /project/{name}
+     * DELETE /projects/{name}
      */
     public Response deleteProject(String name, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);

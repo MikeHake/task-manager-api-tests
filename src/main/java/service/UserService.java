@@ -25,7 +25,7 @@ public class UserService {
     }
     
     /**
-     * GET /user/
+     * GET /users/
      */
     public Response getUserList(Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
