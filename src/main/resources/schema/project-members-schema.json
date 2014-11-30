@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Project Members",
+    "description":"List of users",
+    "type": "object",
+    "additionalItems":false,
+    "properties": {
+        "url": {
+            "description": "Self URL",
+            "type": "string"
+        },
+        "items": {
+            "description":"List people on project",
+            "type": "array",
+            "items":{
+                "type":"string"
+            }
+        }
+    }    
+}

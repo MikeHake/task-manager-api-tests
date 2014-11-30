@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Project list",
+    "description":"List of projects",
+    "type": "object",
+    "additionalItems":false,
+    "properties": {
+        "url": {
+            "description": "Self URL",
+            "type": "string"
+        },
+        "items": {
+            "description":"project items",
+            "type": "array",
+            "items":{
+                "type":"object",
+                "required": ["url", "name", "displayName", "description"],
+                "additionalProperties":false,
+                "properties": {
+                    "url": {
+                        "description": "Self URL",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The unique project name",
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "description": "Project display name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Project description",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
