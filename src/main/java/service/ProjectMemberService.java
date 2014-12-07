@@ -16,11 +16,12 @@ public class ProjectMemberService {
     }
     
     /**
+     * TODO - delete this put? Is this incorrect REST????
      * PUT /projects/{projectName}/members/{memberName}
      */
     public Response putMemberToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.put(buildURLString(projectName, memberName));
+        Response response = request.put(buildURLString(projectName, memberName, "member"));
         return response;
     }
     
@@ -29,7 +30,7 @@ public class ProjectMemberService {
      */
     public Response postMemberToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.post(buildURLString(projectName, memberName));
+        Response response = request.post(buildURLString(projectName, memberName, "member"));
         return response;
     }
     
@@ -38,7 +39,7 @@ public class ProjectMemberService {
      */
     public Response deleteMemberFromProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.delete(buildURLString(projectName, memberName));
+        Response response = request.delete(buildURLString(projectName, memberName, "member"));
         return response;
     }
     
@@ -47,7 +48,44 @@ public class ProjectMemberService {
      */
     public Response getAllMembersOnProject(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.get(buildURLString(projectName, null));
+        Response response = request.get(buildURLString(projectName, null, "member"));
+        return response;
+    }
+    
+    /**
+     * TODO - delete this put? Is this incorrect REST????
+     * PUT /projects/{projectName}/admins/{name}
+     */
+    public Response putAdminToProject(String projectName, String memberName, Credentials credentials){
+        RequestSpecification request = createRequestSpecification(credentials);
+        Response response = request.put(buildURLString(projectName, memberName, "admin"));
+        return response;
+    }
+    
+    /**
+     * POST /projects/{projectName}/admins/{name}
+     */
+    public Response postAdminToProject(String projectName, String memberName, Credentials credentials){
+        RequestSpecification request = createRequestSpecification(credentials);
+        Response response = request.post(buildURLString(projectName, memberName, "admin"));
+        return response;
+    }
+    
+    /**
+     * DELETE /projects/{projectName}/admins/{name}
+     */
+    public Response deleteAdminFromProject(String projectName, String memberName, Credentials credentials){
+        RequestSpecification request = createRequestSpecification(credentials);
+        Response response = request.delete(buildURLString(projectName, memberName, "admin"));
+        return response;
+    }
+    
+    /**
+     * GET /projects/{projectName}/admins/
+     */
+    public Response getAllAdminsOnProject(String projectName, Credentials credentials){
+        RequestSpecification request = createRequestSpecification(credentials);
+        Response response = request.get(buildURLString(projectName, null, "admin"));
         return response;
     }
     
@@ -56,12 +94,17 @@ public class ProjectMemberService {
      * helper method to create the end url of:
      * /projects/{projectName}/members/{memberName}
      */
-    private String buildURLString(String projectName, String memberName){
+    private String buildURLString(String projectName, String userName, String userType){
         StringBuilder builder = new StringBuilder(apiUrl);
         builder.append(projectName);
-        builder.append("/members/");
-        if(memberName!=null){
-            builder.append(memberName);
+        if(userType.equals("admin")){
+            builder.append("/admins/");
+        }else{
+            builder.append("/members/");
+        }
+        
+        if(userName!=null){
+            builder.append(userName);
         }
         return builder.toString();
     }

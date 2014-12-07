@@ -64,12 +64,18 @@ public class ProjectSteps extends BaseSteps {
         projectUtils.ensureProjectExists(name, getCurrentCredentials());
     }
     
-    @Given("project $projectName is initialized with members $userList")
-    public void givenProjectCreatedAndInitialized(@Named("projectName") String projectName,@Named("userList") List<String> userList) {
+    @Given("project $projectName is initialized with members $userList and admins $adminList")
+    public void givenProjectCreatedAndInitialized(@Named("projectName") String projectName,@Named("userList") List<String> userList,
+            @Named("adminList") List<String> adminList) {
         projectUtils.recreateProject(projectName, getCurrentCredentials());
         
         for(String userName : userList){
             Response response = projectMemberService.postMemberToProject(projectName, userName, getCurrentCredentials());
+            response.then().assertThat().statusCode(204);
+        }
+        
+        for(String adminName : adminList){
+            Response response = projectMemberService.postAdminToProject(projectName, adminName, getCurrentCredentials());
             response.then().assertThat().statusCode(204);
         }
     }
