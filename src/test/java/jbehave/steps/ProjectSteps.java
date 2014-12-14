@@ -2,7 +2,7 @@ package jbehave.steps;
 
 import java.util.List;
 
-import model.MembersList;
+import model.ProjectTeamMembers;
 import model.Project;
 
 import org.jbehave.core.annotations.Given;
@@ -64,7 +64,7 @@ public class ProjectSteps extends BaseSteps {
         projectUtils.ensureProjectExists(name, getCurrentCredentials());
     }
     
-    @Given("project $projectName is initialized with members $userList and admins $adminList")
+    @Given("project $projectName is recreated with members $userList and admins $adminList")
     public void givenProjectCreatedAndInitialized(@Named("projectName") String projectName,@Named("userList") List<String> userList,
             @Named("adminList") List<String> adminList) {
         projectUtils.recreateProject(projectName, getCurrentCredentials());
@@ -101,8 +101,8 @@ public class ProjectSteps extends BaseSteps {
     public void thenUserIsMemberOfProject(@Named("userName") String userName,@Named("projectName") String projectName) {
         Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
-        MembersList membersList = response.as(MembersList.class);
-        Assert.assertTrue("User '"+userName+"' not present in project members list", membersList.getItems().contains(userName));
+        ProjectTeamMembers membersList = response.as(ProjectTeamMembers.class);
+        Assert.assertTrue("User '"+userName+"' not present in project members list", membersList.isMemberPresent(userName));
     }
     
     @When("members list is retrieved for project $projectName")
@@ -115,7 +115,7 @@ public class ProjectSteps extends BaseSteps {
     public void thenProjectContainsCountMembers(@Named("projectName") String projectName,@Named("count") int count) {
         Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
-        MembersList membersList = response.as(MembersList.class);
+        ProjectTeamMembers membersList = response.as(ProjectTeamMembers.class);
         Assert.assertEquals("Incorrect number of project members", count, membersList.getItems().size());
     }
     

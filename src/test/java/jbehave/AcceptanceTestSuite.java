@@ -5,7 +5,7 @@ import net.thucydides.jbehave.ThucydidesJUnitStories;
 public class AcceptanceTestSuite extends ThucydidesJUnitStories {
     
     private static final String DEFAULT_STORY_NAMES = "**/*.story";
-    //private static final String DEFAULT_STORY_NAMES = "**/project_crud.story";
+    //private static final String DEFAULT_STORY_NAMES = "**/project_members.story";
     
     public AcceptanceTestSuite(){
         findStoriesCalled(DEFAULT_STORY_NAMES);

@@ -24,11 +24,32 @@
         },
         "teamMembers": {
             "description":"List people on this project",
-            "type": "array",
-            "items":{
-                "type":"string"
+            "type": "object",
+                "properties":{
+                    "url": {
+                        "description": "Self URL",
+                        "type": "string"
+                    },
+                    "items":{
+                        "description":"project members",
+                        "type": "array",
+                        "items":{
+                            "type":"object",
+                            "required": ["id", "isProjectAdmin"],
+                            "additionalProperties":false,
+                            "properties": {
+                            "id": {
+                                "description": "User Id",
+                                "type": "string"
+                            },
+                            "isProjectAdmin": {
+                                "description": "If this user had admin rights to this project",
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
             }
         }
-       
-   }     
+    }
 }
