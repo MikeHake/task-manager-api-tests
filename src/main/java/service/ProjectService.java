@@ -38,10 +38,10 @@ public class ProjectService {
     /**
      * POST /projects/{name}
      */
-    public Response postProject(String name, Project project, Credentials credentials){
+    public Response postProject(Project project, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         request.body(project);
-        Response response = request.post(apiUrl+name);
+        Response response = request.post(apiUrl);
         return response;
     }
     

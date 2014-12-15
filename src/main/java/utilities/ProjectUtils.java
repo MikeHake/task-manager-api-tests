@@ -59,7 +59,7 @@ public class ProjectUtils {
     
     private void createProject(String name,Credentials creds){
         Project project = new Project(name,name, "Test description");
-        Response response = projectService.postProject(name, project, creds);
+        Response response = projectService.postProject(project, creds);
         if(response.statusCode()!=201){
             // something has gone wrong.
             // Calling code should not try to recover so throw unchecked exception

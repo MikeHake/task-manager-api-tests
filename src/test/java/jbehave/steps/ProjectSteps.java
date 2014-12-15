@@ -25,7 +25,7 @@ public class ProjectSteps extends BaseSteps {
     @When("project $name is created (POST)")
     public void whenPostProject(@Named("name") String name) {
         Project project = new Project(name,name, "Test description");
-        Response response = projectService.postProject(name, project, getCurrentCredentials());
+        Response response = projectService.postProject(project, getCurrentCredentials());
         setLastResponse(response);
     }
     
