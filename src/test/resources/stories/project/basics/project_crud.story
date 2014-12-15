@@ -1,12 +1,12 @@
 
-Scenario: Project - GET project conforms to schema
+Scenario: Project - GET single project details as global admin and verify schema
 Given using credentials admin:secret
 And the project named TestProject1 exists
 When project TestProject1 is retrieved (GET)
 Then the response status code is 200
 And the response body conforms to schema schema/project-schema.json
 
-Scenario: Project - GET project list conforms to schema
+Scenario: Project - GET project list as global admin and verify schema
 Given using credentials admin:secret
 And the project named TestProject1 exists
 And the project named TestProject2 exists
@@ -78,18 +78,39 @@ And using credentials user1:secret
 When the description of TestProject1 is updated via PUT to New Description for Project
 Then the response status code is 403
 
+Scenario: Project - GET single project details as user on project results in success
+Given using credentials admin:secret
+And project TestProject1 is recreated with members user1 and admins projectAdmin1
+And using credentials user1:secret
+When project TestProject1 is retrieved (GET)
+Then the response status code is 200
+And the response body conforms to schema schema/project-schema.json
+
+Scenario: Project - GET single project details as user NOT on project results in 403
+Given using credentials admin:secret
+And project TestProject1 is recreated with members user1 and admins projectAdmin1
+And using credentials user2:secret
+When project TestProject1 is retrieved (GET)
+Then the response status code is 403
+
 Scenario: Project - GET all projects as global admin returns all
-Given this scenario is pending
+Given using credentials admin:secret
+And project TestProject1 is recreated with members user1 and admins projectAdmin1
+And project TestProject2 is recreated with members user1 and admins projectAdmin1
+When the list of all projects is retrieved (GET)
+Then the response status code is 200
+And the response project list contains project TestProject1
+And the response project list contains project TestProject2
 
 Scenario: Project - GET all projects user returns only projects user is on
-Given this scenario is pending
+Given using credentials admin:secret
+And project TestProject1 is recreated with members user1 and admins projectAdmin1
+And project TestProject2 is recreated with members user2 and admins projectAdmin1
+And using credentials user1:secret
+When the list of all projects is retrieved (GET)
+Then the response status code is 200
+And the response project list contains project TestProject1
+And the response project list does not contain project TestProject2
 
-Scenario: Project - GET single project details as global admin
-Given this scenario is pending
 
-Scenario: Project - GET single project details as user on project
-Given this scenario is pending
-
-Scenario: Project - GET single project details as user NOT on project results in 401
-Given this scenario is pending
 

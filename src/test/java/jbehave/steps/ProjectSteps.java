@@ -2,7 +2,8 @@ package jbehave.steps;
 
 import java.util.List;
 
-import model.ProjectTeamMembers;
+import model.ProjectCollection;
+import model.ProjectTeamMemberCollection;
 import model.Project;
 
 import org.jbehave.core.annotations.Given;
@@ -101,7 +102,7 @@ public class ProjectSteps extends BaseSteps {
     public void thenUserIsMemberOfProject(@Named("userName") String userName,@Named("projectName") String projectName) {
         Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
-        ProjectTeamMembers membersList = response.as(ProjectTeamMembers.class);
+        ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertTrue("User '"+userName+"' not present in project members list", membersList.isMemberPresent(userName));
     }
     
@@ -115,7 +116,7 @@ public class ProjectSteps extends BaseSteps {
     public void thenProjectContainsCountMembers(@Named("projectName") String projectName,@Named("count") int count) {
         Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
-        ProjectTeamMembers membersList = response.as(ProjectTeamMembers.class);
+        ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertEquals("Incorrect number of project members", count, membersList.getItems().size());
     }
     
@@ -153,6 +154,22 @@ public class ProjectSteps extends BaseSteps {
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         Assert.assertEquals("Incorrect display name", description, project.getDescription());
+    }
+    
+    @Then("the response project list contains project $projectName")
+    public void thenVerifyProjectListContains(@Named("projectName") String projectName) {
+        Response response = getLastResponse();
+        response.then().assertThat().statusCode(200);
+        ProjectCollection collection = response.as(ProjectCollection.class);
+        Assert.assertTrue("Expected project is missing from list: "+projectName, collection.isProjectPresent(projectName));
+    }
+    
+    @Then("the response project list does not contain project $projectName")
+    public void thenVerifyProjectListDoesNotContain(@Named("projectName") String projectName) {
+        Response response = getLastResponse();
+        response.then().assertThat().statusCode(200);
+        ProjectCollection collection = response.as(ProjectCollection.class);
+        Assert.assertFalse("Unexpected project in the list: "+projectName, collection.isProjectPresent(projectName));
     }
     
 }

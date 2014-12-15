@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class TaskList extends ApiObject{
+public class TaskCollection extends ApiObject{
 
     private List<Task> items;
 

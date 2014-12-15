@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class ProjectTeamMembers extends ApiObject{
+public class ProjectTeamMemberCollection extends ApiObject{
 
     private List<ProjectTeamMember> items;
 

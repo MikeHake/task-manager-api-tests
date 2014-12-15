@@ -6,7 +6,7 @@ import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
-import model.TaskList;
+import model.TaskCollection;
 
 import service.ProjectTaskService;
 
@@ -27,7 +27,7 @@ public class TaskSteps extends BaseSteps {
     public void thenTaskIsPresentOnProject(@Named("taskTitle") String taskTitle,@Named("taskDescription") String taskDescription,@Named("projectName") String projectName) {
         // fetch all tasks on project and ensure its there
         Response response = projectTaskService.getProjectTaskList(projectName, getCurrentCredentials());
-        TaskList taskList = response.as(TaskList.class);
+        TaskCollection taskList = response.as(TaskCollection.class);
         Assert.assertTrue("Expected at least 1 task to be present",taskList.getItems().size() > 0);
         boolean found = false;
         for(Task item:taskList.getItems()){

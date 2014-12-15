@@ -6,7 +6,7 @@ public class Project extends ApiObject{
     private String name;
     private String displayName;
     private String description;
-    private ProjectTeamMembers teamMembers;
+    private ProjectTeamMemberCollection teamMembers;
     
     public Project() {}
     
@@ -41,11 +41,11 @@ public class Project extends ApiObject{
         this.description = description;
     }
 
-    public ProjectTeamMembers getTeamMembers() {
+    public ProjectTeamMemberCollection getTeamMembers() {
         return teamMembers;
     }
 
-    public void setTeamMembers(ProjectTeamMembers teamMembers) {
+    public void setTeamMembers(ProjectTeamMemberCollection teamMembers) {
         this.teamMembers = teamMembers;
     }
     
