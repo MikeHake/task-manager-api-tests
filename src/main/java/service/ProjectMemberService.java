@@ -16,21 +16,11 @@ public class ProjectMemberService {
     }
     
     /**
-     * TODO - delete this put? Is this incorrect REST????
      * PUT /projects/{projectName}/members/{memberName}
      */
     public Response putMemberToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.put(buildURLString(projectName, memberName, "member"));
-        return response;
-    }
-    
-    /**
-     * POST /projects/{projectName}/members/{memberName}
-     */
-    public Response postMemberToProject(String projectName, String memberName, Credentials credentials){
-        RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.post(buildURLString(projectName, memberName, "member"));
         return response;
     }
     
@@ -53,21 +43,11 @@ public class ProjectMemberService {
     }
     
     /**
-     * TODO - delete this put? Is this incorrect REST????
      * PUT /projects/{projectName}/admins/{name}
      */
     public Response putAdminToProject(String projectName, String memberName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.put(buildURLString(projectName, memberName, "admin"));
-        return response;
-    }
-    
-    /**
-     * POST /projects/{projectName}/admins/{name}
-     */
-    public Response postAdminToProject(String projectName, String memberName, Credentials credentials){
-        RequestSpecification request = createRequestSpecification(credentials);
-        Response response = request.post(buildURLString(projectName, memberName, "admin"));
         return response;
     }
     

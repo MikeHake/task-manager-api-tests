@@ -70,12 +70,12 @@ public class ProjectSteps extends BaseSteps {
         projectUtils.recreateProject(projectName, getCurrentCredentials());
         
         for(String userName : userList){
-            Response response = projectMemberService.postMemberToProject(projectName, userName, getCurrentCredentials());
+            Response response = projectMemberService.putMemberToProject(projectName, userName, getCurrentCredentials());
             response.then().assertThat().statusCode(204);
         }
         
         for(String adminName : adminList){
-            Response response = projectMemberService.postAdminToProject(projectName, adminName, getCurrentCredentials());
+            Response response = projectMemberService.putAdminToProject(projectName, adminName, getCurrentCredentials());
             response.then().assertThat().statusCode(204);
         }
     }
@@ -87,7 +87,7 @@ public class ProjectSteps extends BaseSteps {
     
     @When("user $userName is added to $projectName")
     public void whenAddMemberToProject(@Named("userName") String userName,@Named("projectName") String projectName) {
-        Response response = projectMemberService.postMemberToProject(projectName, userName, getCurrentCredentials());
+        Response response = projectMemberService.putMemberToProject(projectName, userName, getCurrentCredentials());
         setLastResponse(response);
     }
     
