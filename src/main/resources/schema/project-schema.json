@@ -3,7 +3,7 @@
     "title": "Project",
     "description":"A single Project",
     "type": "object",
-    "required": ["name", "displayName", "description", "teamMembers"],
+    "required": ["url", "name", "displayName", "description", "teamMembers"],
     "additionalProperties":false,
     "properties": {
         "url": {

@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Task",
+    "description":"A single task instance",
+    "type": "object",
+    "required": ["url", "title", "id", "description", "project", "owner", "status", "createDate", "createdBy"],
+    "additionalProperties":false,
+    "properties": {
+        "url": {
+            "description": "Self URL",
+            "type": "string"
+        },
+        "title": {
+            "description": "Task title",
+            "type": "string"
+        },
+        "id": {
+            "description": "Task id",
+            "type": "integer"
+        },
+        "description": {
+            "description": "Task description",
+            "type": "string"
+        },
+        "project": {
+            "description": "Task project",
+            "type": "string"
+        },
+        "owner": {
+            "description": "Task owner",
+            "type": "string"
+        },
+        "status": {
+            "description": "Task status",
+            "type": "string"
+        },
+        "createDate": {
+            "description": "Task createDate",
+            "type": "string"
+        },
+        "createdBy": {
+            "description": "Task createdBy",
+            "type": "string"
+        }
+       
+    }
+}

@@ -3,7 +3,8 @@
     "title": "Project list",
     "description":"List of projects",
     "type": "object",
-    "additionalItems":false,
+    "required": ["url", "items"],
+    "additionalProperties":false,
     "properties": {
         "url": {
             "description": "Self URL",

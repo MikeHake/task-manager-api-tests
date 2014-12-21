@@ -3,7 +3,8 @@
     "title": "Users",
     "description":"List of users",
     "type": "object",
-    "additionalItems":false,
+    "required": ["url", "items"],
+    "additionalProperties":false,
     "properties": {
         "url": {
             "description": "Self URL",

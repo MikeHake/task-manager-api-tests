@@ -3,6 +3,8 @@
     "title": "Project Members",
     "description":"List people on this project",
     "type": "object",
+    "required": ["url", "items"],
+    "additionalProperties":false,
     "properties":{
         "url": {
             "description": "Self URL",
