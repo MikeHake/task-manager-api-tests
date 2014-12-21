@@ -13,3 +13,9 @@ And project TestProject1 is recreated with members user1 and admins projectAdmin
 When using credentials user2:secret
 And task title1:description2 is added to TestProject1
 Then the response status code is 403
+
+Scenario:Tasks - GET all tasks on a project
+Given this story is pending
+
+Scenario:Tasks - GET single task details by task id
+Given this story is pending
