@@ -32,13 +32,13 @@ public class ProjectSteps extends BaseSteps {
     
     @When("project $name is retrieved (GET)")
     public void whenGetProject(@Named("name") String name) {
-        Response response = projectService.getProject(name, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(name, getCurrentCredentials());
         setLastResponse(response);
     }
     
     @When("the list of all projects is retrieved (GET)")
     public void whenGetProjectList() {
-        Response response = projectService.getProjectList(getCurrentCredentials());
+        Response response = projectService.getProjectCollection(getCurrentCredentials());
         setLastResponse(response);
     }
     
@@ -55,7 +55,7 @@ public class ProjectSteps extends BaseSteps {
     
     @Then("project $name is not found")
     public void thenProjectIsNotFound(@Named("name") String name) {
-        Response response = projectService.getProject(name, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(name, getCurrentCredentials());
         // We expect it to not be found
         response.then().assertThat().statusCode(404);
     }
@@ -100,7 +100,7 @@ public class ProjectSteps extends BaseSteps {
     
     @Then("user $userName is listed as a member of project $projectName")
     public void thenUserIsMemberOfProject(@Named("userName") String userName,@Named("projectName") String projectName) {
-        Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
+        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertTrue("User '"+userName+"' not present in project members list", membersList.isMemberPresent(userName));
@@ -108,13 +108,13 @@ public class ProjectSteps extends BaseSteps {
     
     @When("members list is retrieved for project $projectName")
     public void whenMembersListRetrieved(@Named("projectName") String projectName) {
-        Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
+        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
         setLastResponse(response);
     }
     
     @Then("project $projectName contains $count members")
     public void thenProjectContainsCountMembers(@Named("projectName") String projectName,@Named("count") int count) {
-        Response response = projectMemberService.getAllMembersOnProject(projectName, getCurrentCredentials());
+        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertEquals("Incorrect number of project members", count, membersList.getItems().size());
@@ -122,7 +122,7 @@ public class ProjectSteps extends BaseSteps {
     
     @When("the display name of $projectName is updated via PUT to $displayName")
     public void whenDisplayNameChanged(@Named("projectName") String projectName,@Named("displayName") String displayName) {
-        Response response = projectService.getProject(projectName, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         project.setDisplayName(displayName);
@@ -132,7 +132,7 @@ public class ProjectSteps extends BaseSteps {
     
     @When("the description of $projectName is updated via PUT to $description")
     public void whenDescriptionChanged(@Named("projectName") String projectName,@Named("description") String description) {
-        Response response = projectService.getProject(projectName, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         project.setDescription(description);
@@ -142,7 +142,7 @@ public class ProjectSteps extends BaseSteps {
     
     @Then("project $projectName has a display name of $displayName")
     public void thenVerifyDisplayName(@Named("projectName") String projectName,@Named("displayName") String displayName) {
-        Response response = projectService.getProject(projectName, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         Assert.assertEquals("Incorrect display name", displayName, project.getDisplayName());
@@ -150,7 +150,7 @@ public class ProjectSteps extends BaseSteps {
     
     @Then("project $projectName has a description of $description")
     public void thenVerifyDescription(@Named("projectName") String projectName,@Named("description") String description) {
-        Response response = projectService.getProject(projectName, getCurrentCredentials());
+        Response response = projectService.getProjectInstance(projectName, getCurrentCredentials());
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         Assert.assertEquals("Incorrect display name", description, project.getDescription());

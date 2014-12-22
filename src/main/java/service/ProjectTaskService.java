@@ -20,7 +20,7 @@ private String apiUrl;
     /**
      * GET /projects/{projectName}/tasks/{id}
      */
-    public Response getProjectTask(String projectName, String taskId, Credentials credentials){
+    public Response getTaskInstance(String projectName, String taskId, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(buildURLString(projectName, taskId));
         return response;
@@ -29,7 +29,7 @@ private String apiUrl;
     /**
      * GET /projects/{projectName}/tasks/
      */
-    public Response getProjectTaskList(String projectName, Credentials credentials){
+    public Response getTaskCollection(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(buildURLString(projectName, null));
         return response;
@@ -38,7 +38,7 @@ private String apiUrl;
     /**
      * POST /projects/{projectName}/tasks/
      */
-    public Response postProjectTask(String projectName, Task task, Credentials credentials){
+    public Response postTask(String projectName, Task task, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         request.body(task);
         Response response = request.post(buildURLString(projectName, null));

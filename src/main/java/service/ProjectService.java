@@ -20,7 +20,7 @@ public class ProjectService {
     /**
      * GET /projects/{name}
      */
-    public Response getProject(String name, Credentials credentials){
+    public Response getProjectInstance(String name, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(apiUrl+name);
         return response;
@@ -29,7 +29,7 @@ public class ProjectService {
     /**
      * GET /projects/
      */
-    public Response getProjectList(Credentials credentials){
+    public Response getProjectCollection(Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(apiUrl);
         return response;

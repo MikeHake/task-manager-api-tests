@@ -36,7 +36,7 @@ public class ProjectMemberService {
     /**
      * GET /projects/{projectName}/members/
      */
-    public Response getAllMembersOnProject(String projectName, Credentials credentials){
+    public Response getProjectMemberCollection(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(buildURLString(projectName, null, "member"));
         return response;
@@ -63,7 +63,7 @@ public class ProjectMemberService {
     /**
      * GET /projects/{projectName}/admins/
      */
-    public Response getAllAdminsOnProject(String projectName, Credentials credentials){
+    public Response getProjectAdminCollection(String projectName, Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(buildURLString(projectName, null, "admin"));
         return response;

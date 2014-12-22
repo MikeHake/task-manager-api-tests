@@ -27,7 +27,7 @@ public class UserService {
     /**
      * GET /users/
      */
-    public Response getUserList(Credentials credentials){
+    public Response getUserCollection(Credentials credentials){
         RequestSpecification request = createRequestSpecification(credentials);
         Response response = request.get(apiUrl);
         return response;

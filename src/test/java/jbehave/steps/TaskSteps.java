@@ -21,14 +21,14 @@ public class TaskSteps extends BaseSteps {
     @When("task $taskTitle:$taskDescription is added to $projectName")
     public void whenAddTaskToProject(@Named("taskTitle") String taskTitle,@Named("taskDescription") String taskDescription,@Named("projectName") String projectName) {
         Task task = new Task(taskTitle, taskDescription);
-        Response response = projectTaskService.postProjectTask(projectName, task, getCurrentCredentials());
+        Response response = projectTaskService.postTask(projectName, task, getCurrentCredentials());
         setLastResponse(response);
     }
     
     @Then("task $taskTitle:$taskDescription is present on $projectName")
     public void thenTaskIsPresentOnProject(@Named("taskTitle") String taskTitle,@Named("taskDescription") String taskDescription,@Named("projectName") String projectName) {
         // fetch all tasks on project and ensure its there
-        Response response = projectTaskService.getProjectTaskList(projectName, getCurrentCredentials());
+        Response response = projectTaskService.getTaskCollection(projectName, getCurrentCredentials());
         TaskCollection taskList = response.as(TaskCollection.class);
         Assert.assertTrue("Expected at least 1 task to be present",taskList.getItems().size() > 0);
         boolean found = false;
@@ -47,7 +47,7 @@ public class TaskSteps extends BaseSteps {
         Task task = response.as(Task.class);
         String id = task.getId();
         String projectName = task.getProject();
-        response = projectTaskService.getProjectTask(projectName, id, getCurrentCredentials());
+        response = projectTaskService.getTaskInstance(projectName, id, getCurrentCredentials());
         setLastResponse(response);
     }
     

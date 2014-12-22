@@ -39,7 +39,7 @@ public class ProjectUtils {
      * @param creds
      */
     public void ensureProjectExists(String name,Credentials creds){
-        Response response = projectService.getProject(name, creds);
+        Response response = projectService.getProjectInstance(name, creds);
         if(response.getStatusCode()!=200){
             // project does not exist, must create
             createProject(name,creds);
