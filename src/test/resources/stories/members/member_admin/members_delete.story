@@ -20,3 +20,4 @@ And using credentials user1:secret
 When user user2 is deleted from TestProjectMembers
 Then the response status code is 403
 And project TestProjectMembers contains 4 members
+And the response body conforms to schema schema/error-schema.json

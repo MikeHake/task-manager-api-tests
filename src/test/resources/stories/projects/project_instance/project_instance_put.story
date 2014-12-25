@@ -34,6 +34,7 @@ And project TestProject1 is recreated with members user1 and admins projectAdmin
 And using credentials user1:secret
 When the display name of TestProject1 is updated via PUT to New Display Name for Project
 Then the response status code is 403
+And the response body conforms to schema schema/error-schema.json
 
 Scenario: Project - PUT update project description as non admin is unauthorized
 Given using credentials admin:secret
@@ -41,3 +42,4 @@ And project TestProject1 is recreated with members user1 and admins projectAdmin
 And using credentials user1:secret
 When the description of TestProject1 is updated via PUT to New Description for Project
 Then the response status code is 403
+And the response body conforms to schema schema/error-schema.json

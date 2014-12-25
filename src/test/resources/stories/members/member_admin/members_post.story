@@ -20,3 +20,4 @@ And using credentials user1:secret
 When user user4 is added to TestProjectMembers
 Then the response status code is 403
 And project TestProjectMembers contains 3 members
+And the response body conforms to schema schema/error-schema.json

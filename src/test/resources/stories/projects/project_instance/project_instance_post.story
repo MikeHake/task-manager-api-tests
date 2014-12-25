@@ -9,4 +9,5 @@ Scenario: Project - POST new project with non URL friendly name results in 400 e
 Given using credentials admin:secret
 When project Invalid Project Name is created (POST)
 Then the response status code is 400
+And the response body conforms to schema schema/error-schema.json
 
