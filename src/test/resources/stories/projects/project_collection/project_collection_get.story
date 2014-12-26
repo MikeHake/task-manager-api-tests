@@ -3,8 +3,7 @@ Given using credentials admin:secret
 And the project named TestProject1 exists
 And the project named TestProject2 exists
 When the list of all projects is retrieved (GET)
-Then the response status code is 200
-And the response body conforms to schema schema/project-collection-schema.json
+Then the response status is 200 and the response body conforms to schema schema/project-collection-schema.json
 
 Scenario: Project - GET all projects as global admin returns all
 Given using credentials admin:secret

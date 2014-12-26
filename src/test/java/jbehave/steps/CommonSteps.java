@@ -27,9 +27,15 @@ public class CommonSteps extends BaseSteps {
         Assert.assertEquals(status, response.getStatusCode());
     }
     
-    @Then("the response body conforms to schema $schema")
-    public void thenVerifySchema(@Named("schema") String schema) {
+    /**
+     * Check both the status code and the structure of the response body
+     * @param status
+     * @param schema
+     */
+    @Then("the response status is $status and the response body conforms to schema $schema")
+    public void thenVerifyResponseCodeAndSchema(@Named("status") int status, @Named("schema") String schema) {
         Response response = getLastResponse();
+        Assert.assertEquals(status, response.getStatusCode());
         response.then().assertThat().body(matchesJsonSchemaInClasspath(schema));
     }
 }
