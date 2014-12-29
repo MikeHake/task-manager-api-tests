@@ -1,5 +1,7 @@
 package jbehave.steps;
 
+import model.Project;
+import model.ProjectCollection;
 import model.Task;
 
 import org.jbehave.core.annotations.Given;
@@ -57,5 +59,22 @@ public class TaskSteps extends BaseSteps {
         Task task = response.as(Task.class);
         Assert.assertEquals(taskTitle, task.getTitle());
         Assert.assertEquals(taskDescription, task.getDescription());
+    }
+    
+    @When("GET all tasks for project $projectName")
+    public void whenGetTaskList(@Named("projectName") String projectName) {
+        Response response = projectTaskService.getTaskCollection(projectName, getCurrentCredentials());
+        setLastResponse(response);
+    }
+    
+    @Then("the items in the returned task collection each has a URL to fetch that task instance")
+    public void thenVerifyTaskColectionURLs() {
+        Response response = getLastResponse();
+        response.then().assertThat().statusCode(200);
+        TaskCollection collection = response.as(TaskCollection.class);
+        for(Task task : collection.getItems()){
+            String url = task.getUrl();
+            Assert.assertTrue(url.endsWith("tasks/"+task.getId()));
+        }
     }
 }

@@ -172,4 +172,15 @@ public class ProjectSteps extends BaseSteps {
         Assert.assertFalse("Unexpected project in the list: "+projectName, collection.isProjectPresent(projectName));
     }
     
+    @Then("the items in the returned project collection each has a URL to fetch that project instance")
+    public void thenVerifyProjectColectionURLs() {
+        Response response = getLastResponse();
+        response.then().assertThat().statusCode(200);
+        ProjectCollection collection = response.as(ProjectCollection.class);
+        for(Project project : collection.getItems()){
+            String url = project.getUrl();
+            Assert.assertTrue(url.endsWith("projects/"+project.getName()));
+        }
+    }
+    
 }

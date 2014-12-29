@@ -16,7 +16,7 @@
         },
         "id": {
             "description": "Task id",
-            "type": "integer"
+            "type": "string"
         },
         "description": {
             "description": "Task description",

@@ -1,4 +1,4 @@
-Scenario: Project - POST new project as global admin
+Scenario: Project - POST new project results in 201 and project in body
 Given using credentials admin:secret
 And the project TestProject1 does not exist
 When project TestProject1 is created (POST)

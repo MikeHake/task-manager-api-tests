@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Task collection",
+    "description":"Collection of tasks",
+    "type": "object",
+    "required": ["url", "items"],
+    "additionalProperties":false,
+    "properties": {
+        "url": {
+            "description": "Self URL",
+            "type": "string"
+        },
+        "items": {
+            "description":"Tasks",
+            "type": "array",
+            "items":{
+                "type":"object",
+                "required": ["url", "title", "id", "status"],
+                "additionalProperties":false,
+                "properties": {
+                    "url": {
+                        "description": "Self URL",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Task title",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Task ID",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Task status",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

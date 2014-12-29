@@ -23,3 +23,10 @@ When the list of all projects is retrieved (GET)
 Then the response status code is 200
 And the response project list contains project TestProject1
 And the response project list does not contain project TestProject2
+
+Scenario: Project - GET project list items contain URL to each instance
+Given using credentials admin:secret
+And the project named TestProject1 exists
+And the project named TestProject2 exists
+When the list of all projects is retrieved (GET)
+Then the items in the returned project collection each has a URL to fetch that project instance
