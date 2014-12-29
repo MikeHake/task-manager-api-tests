@@ -23,7 +23,7 @@
             "type": "string"
         },
         "project": {
-            "description": "Task project",
+            "description": "Task project name",
             "type": "string"
         },
         "owner": {

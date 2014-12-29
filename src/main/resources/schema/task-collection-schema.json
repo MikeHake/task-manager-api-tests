@@ -30,6 +30,10 @@
                         "description": "Task ID",
                         "type": "string"
                     },
+                    "project": {
+                        "description": "Task project name",
+                        "type": "string"
+                    },
                     "status": {
                         "description": "Task status",
                         "type": "string"

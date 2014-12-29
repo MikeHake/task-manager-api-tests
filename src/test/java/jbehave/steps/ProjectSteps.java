@@ -2,6 +2,7 @@ package jbehave.steps;
 
 import java.util.List;
 
+import model.Constants;
 import model.ProjectCollection;
 import model.ProjectTeamMemberCollection;
 import model.Project;
@@ -177,10 +178,17 @@ public class ProjectSteps extends BaseSteps {
         Response response = getLastResponse();
         response.then().assertThat().statusCode(200);
         ProjectCollection collection = response.as(ProjectCollection.class);
+        Assert.assertEquals("Project collection URL incorrect", Constants.BASE_URL+"projects" , collection.getUrl());
         for(Project project : collection.getItems()){
-            String url = project.getUrl();
-            Assert.assertTrue(url.endsWith("projects/"+project.getName()));
+            Assert.assertEquals("Project instance URL incorrect", Constants.BASE_URL+"projects/"+project.getName() , project.getUrl());
         }
+    }
+    
+    @Then("the returned project instance has a URL to fetch that project instance")
+    public void thenVerifyProjectInstanceURL() {
+        Response response = getLastResponse();
+        Project instance = response.as(Project.class);
+        Assert.assertEquals("Project instance URL incorrect", Constants.BASE_URL+"projects/"+instance.getName() , instance.getUrl());
     }
     
 }

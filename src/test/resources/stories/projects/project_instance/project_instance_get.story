@@ -23,3 +23,9 @@ And project TestProject1 is recreated with members user1 and admins projectAdmin
 And using credentials user2:secret
 When project TestProject1 is retrieved (GET)
 Then the response status is 403 and the response body conforms to schema schema/error-schema.json
+
+Scenario: Project - GET single project details contains URL to fetch
+Given using credentials admin:secret
+And the project named TestProject1 exists
+When project TestProject1 is retrieved (GET)
+Then the returned project instance has a URL to fetch that project instance
