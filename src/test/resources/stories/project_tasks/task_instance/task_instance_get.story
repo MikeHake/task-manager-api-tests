@@ -1,4 +1,4 @@
-Scenario:Tasks - GET single task instance by task id
+Scenario: Tasks - GET single task instance by task id
 Given using credentials admin:secret
 And project TestProject1 is recreated with members user1 and admins projectAdmin1
 And task my task 1:task description 1 is added to TestProject1

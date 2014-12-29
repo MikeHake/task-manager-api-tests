@@ -16,7 +16,7 @@ import service.ProjectTaskService;
 
 import com.jayway.restassured.response.Response;
 
-public class TaskSteps extends BaseSteps {
+public class ProjectTaskSteps extends BaseSteps {
 
     private ProjectTaskService projectTaskService = new ProjectTaskService();
     
