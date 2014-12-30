@@ -7,65 +7,63 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import service.ProjectMemberService;
-import service.ProjectService;
-import utilities.ProjectUtils;
-
 import com.jayway.restassured.response.Response;
 
 public class ProjectMembersSteps extends BaseSteps{
     private static final long serialVersionUID = 1L;
 
-    private ProjectService projectService = new ProjectService();
-    private ProjectMemberService projectMemberService = new ProjectMemberService();
-    private ProjectUtils projectUtils = new ProjectUtils(projectService);
-
+    public static final String MEMBER_INSTANCE_URL = "/projects/{projectName}/members/{memberName}";
+    public static final String MEMBER_COLLECTION_URL = "/projects/{projectName}/members";
+    public static final String ADMIN_INSTANCE_URL = "/projects/{projectName}/admins/{memberName}";
+    public static final String ADMIN_COLLECTION_URL = "/projects/{projectName}/admins";
+    
     @Step
-    public void addMemberToProject(String userName,String projectName) {
-        Response response = projectMemberService.putMemberToProject(projectName, userName, getCurrentCredentials());
-        setLastResponse(response);
+    public Response putMember(String userName,String projectName) {
+        return doPut(null, MEMBER_INSTANCE_URL, projectName, userName);
     }
     
     @Step
-    public void deleteMemberFromProject(String userName,String projectName) {
-        Response response = projectMemberService.deleteMemberFromProject(projectName, userName, getCurrentCredentials());
-        setLastResponse(response);
+    public Response putAdmin(String userName,String projectName) {
+        return doPut(null, ADMIN_INSTANCE_URL, projectName, userName);
+    }
+    
+    @Step
+    public Response deleteMember(String userName,String projectName) {
+        return doDelete(MEMBER_INSTANCE_URL, projectName, userName);
+    }
+    
+    @Step
+    public Response getMemberCollection(String projectName) {
+        return doGet(MEMBER_COLLECTION_URL, projectName);
     }
     
     @Step
     public void verifyUserIsMemberOfProject(String userName,String projectName) {
-        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
+        Response response = getMemberCollection(projectName);
         response.then().assertThat().statusCode(200);
         ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertTrue("User '"+userName+"' not present in project members list", membersList.isMemberPresent(userName));
     }
     
     @Step
-    public void getMembersOfProject(String projectName) {
-        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
-        setLastResponse(response);
-    }
-    
-    @Step
     public void verifyNumberOfMembersOnProject(String projectName,int count) {
-        Response response = projectMemberService.getProjectMemberCollection(projectName, getCurrentCredentials());
+        Response response = getMemberCollection(projectName);
         response.then().assertThat().statusCode(200);
         ProjectTeamMemberCollection membersList = response.as(ProjectTeamMemberCollection.class);
         Assert.assertEquals("Incorrect number of project members", count, membersList.getItems().size());
     }
     
     @Step
-    public void recreateAndInitializeProject(String projectName,List<String> userList, List<String> adminList) {
-        projectUtils.recreateProject(projectName, getCurrentCredentials());
-        
+    public void addUsersToProject(String projectName,List<String> userList, List<String> adminList) {
         for(String userName : userList){
-            Response response = projectMemberService.putMemberToProject(projectName, userName, getCurrentCredentials());
+            Response response = putMember(userName, projectName);
             response.then().assertThat().statusCode(204);
         }
         
         for(String adminName : adminList){
-            Response response = projectMemberService.putAdminToProject(projectName, adminName, getCurrentCredentials());
+            Response response =  putAdmin(adminName, projectName);
             response.then().assertThat().statusCode(204);
         }
     }
+    
 }

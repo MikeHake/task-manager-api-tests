@@ -10,20 +10,24 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import steplibrary.ProjectMembersSteps;
+import steplibrary.ProjectSteps;
 
 public class ProjectMembersStepDefinitions {
     
     @Steps
     ProjectMembersSteps projectMembersSteps;
+    
+    @Steps
+    ProjectSteps projectSteps;
 
     @When("user $userName is added to $projectName")
     public void whenAddMemberToProject(@Named("userName") String userName,@Named("projectName") String projectName) {
-        projectMembersSteps.addMemberToProject(userName, projectName);
+        projectMembersSteps.putMember(userName, projectName);
     }
     
     @When("user $userName is deleted from $projectName")
     public void whenDeleteMemberFromProject(@Named("userName") String userName,@Named("projectName") String projectName) {
-        projectMembersSteps.deleteMemberFromProject(userName, projectName);
+        projectMembersSteps.deleteMember(userName, projectName);
     }
     
     @Then("user $userName is listed as a member of project $projectName")
@@ -33,7 +37,7 @@ public class ProjectMembersStepDefinitions {
     
     @When("members list is retrieved for project $projectName")
     public void whenMembersListRetrieved(@Named("projectName") String projectName) {
-        projectMembersSteps.getMembersOfProject(projectName);
+        projectMembersSteps.getMemberCollection(projectName);
     }
     
     @Then("project $projectName contains $count members")
@@ -44,6 +48,7 @@ public class ProjectMembersStepDefinitions {
     @Given("project $projectName is recreated with members $userList and admins $adminList")
     public void givenProjectCreatedAndInitialized(@Named("projectName") String projectName,@Named("userList") List<String> userList,
             @Named("adminList") List<String> adminList) {
-        projectMembersSteps.recreateAndInitializeProject(projectName, userList, adminList);
+        projectSteps.recreateProject(projectName);
+        projectMembersSteps.addUsersToProject(projectName, userList, adminList);
     }
 }

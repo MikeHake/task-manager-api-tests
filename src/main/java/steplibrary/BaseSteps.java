@@ -1,9 +1,14 @@
 package steplibrary;
 
+import static com.jayway.restassured.RestAssured.given;
+
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 import model.Credentials;
 import net.thucydides.core.Thucydides;
+import net.thucydides.core.annotations.Step;
 import net.thucydides.core.steps.ScenarioSteps;
 
 public class BaseSteps extends ScenarioSteps {
@@ -11,6 +16,12 @@ public class BaseSteps extends ScenarioSteps {
 
     protected static final String STORED_CREDENTIALS = "creds";
     protected static final String STORED_RESPONSE = "response";
+    
+    static {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 8080;
+        RestAssured.basePath = "jee-example-task-app/v1";
+    }
     
     /**
      * Stores an object for subsequent steps.
@@ -69,5 +80,81 @@ public class BaseSteps extends ScenarioSteps {
      */
     protected void setLastResponse(Response response){
         store(STORED_RESPONSE,response);
+    }
+    
+    protected RequestSpecification createRequestSpecificationWithCurrentCredentials(){
+        return createRequestSpecification(getCurrentCredentials());
+    }
+    
+    protected RequestSpecification createRequestSpecification(Credentials credentials) {
+        RequestSpecification rs = given()
+                .auth().preemptive().basic(credentials.getUsername(), credentials.getPassword())
+                .relaxedHTTPSValidation()
+                .contentType("application/json");
+        return rs;
+    }
+    
+    /**
+     * Use REST Assured to make API call then cache the Response Object
+     * @param path
+     * @param args
+     * @return
+     */
+    @Step
+    public Response doGet(String path, Object...args){
+        RequestSpecification request = createRequestSpecificationWithCurrentCredentials();
+        Response response = request.get(path,args);
+        setLastResponse(response);
+        return response;
+    }
+    
+    /**
+     * Use REST Assured to make API call then cache the Response Object
+     * @param body
+     * @param path
+     * @param args
+     * @return
+     */
+    @Step
+    public Response doPost(Object body, String path, Object...args){
+        RequestSpecification request = createRequestSpecificationWithCurrentCredentials();
+        if(body!=null){
+            request.body(body);
+        }
+        Response response = request.post(path,args);
+        setLastResponse(response);
+        return response;
+    }
+    
+    /**
+     * Use REST Assured to make API call then cache the Response Object
+     * @param body
+     * @param path
+     * @param args
+     * @return
+     */
+    @Step
+    public Response doPut(Object body, String path, Object...args){
+        RequestSpecification request = createRequestSpecificationWithCurrentCredentials();
+        if(body!=null){
+            request.body(body);
+        }
+        Response response = request.put(path,args);
+        setLastResponse(response);
+        return response;
+    }
+    
+    /**
+     * Use REST Assured to make API call then cache the Response Object
+     * @param path
+     * @param args
+     * @return
+     */
+    @Step
+    public Response doDelete(String path, Object...args){
+        RequestSpecification request = createRequestSpecificationWithCurrentCredentials();
+        Response response = request.delete(path,args);
+        setLastResponse(response);
+        return response;
     }
 }

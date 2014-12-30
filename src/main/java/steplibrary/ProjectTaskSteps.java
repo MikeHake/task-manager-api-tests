@@ -7,26 +7,40 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import service.ProjectTaskService;
-
 import com.jayway.restassured.response.Response;
 
 public class ProjectTaskSteps extends BaseSteps {
     private static final long serialVersionUID = 1L;
 
-    private ProjectTaskService projectTaskService = new ProjectTaskService();
+    public static final String TASK_INSTANCE_URL = "/projects/{name}/tasks/{id}";
+    public static final String TASK_COLLECTION_URL = "/projects/{name}/tasks";
 
     @Step
-    public void addTaskToProject(String taskTitle, String taskDescription, String projectName) {
+    public Response postTask(Task task, String projectName) {
+        return doPost(task, TASK_COLLECTION_URL, projectName);
+    }
+    
+    @Step
+    public Response getTask(String projectName, String taskId) {
+        return doGet(TASK_INSTANCE_URL,projectName, taskId);
+    }
+    
+    @Step
+    public Response getTaskCollection(String projectName) {
+        return doGet(TASK_COLLECTION_URL,projectName);
+    }
+    
+    
+    @Step
+    public Task createTaskObject(String taskTitle, String taskDescription){
         Task task = new Task(taskTitle, taskDescription);
-        Response response = projectTaskService.postTask(projectName, task, getCurrentCredentials());
-        setLastResponse(response);
+        return task;
     }
 
     @Step
     public void verifyTaskIsPresentOnProject(String taskTitle, String taskDescription, String projectName) {
         // fetch all tasks on project and ensure its there
-        Response response = projectTaskService.getTaskCollection(projectName, getCurrentCredentials());
+        Response response = getTaskCollection(projectName);
         TaskCollection taskList = response.as(TaskCollection.class);
         Assert.assertTrue("Expected at least 1 task to be present", taskList.getItems().size() > 0);
         boolean found = false;
@@ -43,10 +57,9 @@ public class ProjectTaskSteps extends BaseSteps {
     public void parseLastTaskResponseAndGetByID() {
         Response response = getLastResponse();
         Task task = response.as(Task.class);
-        String id = task.getId();
+        String taskId = task.getId();
         String projectName = task.getProject();
-        response = projectTaskService.getTaskInstance(projectName, id, getCurrentCredentials());
-        setLastResponse(response);
+        getTask(projectName, taskId);
     }
 
     @Step
@@ -55,12 +68,6 @@ public class ProjectTaskSteps extends BaseSteps {
         Task task = response.as(Task.class);
         Assert.assertEquals(taskTitle, task.getTitle());
         Assert.assertEquals(taskDescription, task.getDescription());
-    }
-
-    @Step
-    public void getTaskCollection(String projectName) {
-        Response response = projectTaskService.getTaskCollection(projectName, getCurrentCredentials());
-        setLastResponse(response);
     }
 
     @Step

@@ -16,6 +16,10 @@ public class Project extends ApiObject{
         this.displayName = displayName;
         this.description = description;
     }
+    
+    public String toString(){
+        return "Project:"+name;
+    }
 
     public String getName() {
         return name;

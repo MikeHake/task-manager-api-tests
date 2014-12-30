@@ -16,7 +16,4 @@ public class ProjectTeamMember extends ApiObject {
     public void setIsProjectAdmin(boolean isProjectAdmin) {
         this.isProjectAdmin = isProjectAdmin;
     }
-    
-    
-
 }

@@ -1,5 +1,6 @@
 package jbehave.stepdefinitions;
 
+import model.Task;
 import net.thucydides.core.annotations.Steps;
 
 import org.jbehave.core.annotations.Given;
@@ -18,7 +19,8 @@ public class ProjectTaskStepDefinitions {
     @When("task $taskTitle:$taskDescription is added to $projectName")
     public void whenAddTaskToProject(@Named("taskTitle") String taskTitle, @Named("taskDescription") String taskDescription,
             @Named("projectName") String projectName) {
-        projectTaskSteps.addTaskToProject(taskTitle, taskDescription, projectName);
+        Task task = projectTaskSteps.createTaskObject(taskTitle, taskDescription);
+        projectTaskSteps.postTask(task, projectName);
     }
 
     @Then("task $taskTitle:$taskDescription is present on $projectName")

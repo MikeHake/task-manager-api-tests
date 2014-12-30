@@ -19,6 +19,10 @@ public class Task extends ApiObject{
         this.description = description;
     }
     
+    public String toString(){
+        return "Task:'"+title+"'";
+    }
+    
     public String getTitle() {
         return title;
     }

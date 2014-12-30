@@ -7,71 +7,86 @@ import net.thucydides.core.annotations.Step;
 
 import org.junit.Assert;
 
-import service.ProjectService;
-import utilities.ProjectUtils;
-
 import com.jayway.restassured.response.Response;
 
 public class ProjectSteps extends BaseSteps {
     private static final long serialVersionUID = 1L;
-
-    private ProjectService projectService = new ProjectService();
-    private ProjectUtils projectUtils = new ProjectUtils(projectService);
+    
+    public static final String PROJECT_INSTANCE_URL = "/projects/{name}";
+    public static final String PROJECT_COLLECTION_URL = "/projects";
 
     @Step
-    public void postProject(String name) {
-        Project project = new Project(name, name, "Test description");
-        Response response = projectService.postProject(project, getCurrentCredentials());
-        setLastResponse(response);
+    public Response postProject(Project project) {
+        return doPost(project, PROJECT_COLLECTION_URL);
+    }
+    
+    @Step
+    public Response putProject(Project project) {
+        return doPut(project, PROJECT_INSTANCE_URL,project.getName());
     }
 
     @Step
-    public void getProject(String name) {
-        Response response = projectService.getProjectInstance(name, getCurrentCredentials());
-        setLastResponse(response);
+    public Response getProject(String name) {
+        return doGet(PROJECT_INSTANCE_URL,name);
     }
 
     @Step
-    public void getProjectCollection() {
-        Response response = projectService.getProjectCollection(getCurrentCredentials());
-        setLastResponse(response);
+    public Response getProjectCollection() {
+        return doGet(PROJECT_COLLECTION_URL);
     }
 
     @Step
-    public void deleteProject(String name) {
-        Response response = projectService.deleteProject(name, getCurrentCredentials());
-        setLastResponse(response);
+    public Response deleteProject(String name) {
+        return doDelete(PROJECT_INSTANCE_URL,name);
     }
 
     @Step
     public void deleteProjectIfItExists(String name) {
-        projectUtils.ensureProjectDoesNotExist(name, getCurrentCredentials());
+        Response response = deleteProject(name);
+        if(response.statusCode()!=204){
+            // something has gone wrong.
+            // Calling code should not try to recover so throw unchecked exception
+            throw new RuntimeException("Error ensuring project '"+name+"' does not exist");
+        }
     }
 
     @Step
     public void createProjectIfDoesNotExist(String name) {
-        projectUtils.ensureProjectExists(name, getCurrentCredentials());
+        Response response =  getProject(name);
+        if(response.getStatusCode()!=200){
+            // project does not exist, must create
+            createProject(name);
+        }
+    }
+    
+    private void createProject(String name){
+        Project project = new Project(name,name, "Test description");
+        Response response = postProject(project);
+        if(response.statusCode()!=201){
+            // something has gone wrong.
+            // Calling code should not try to recover so throw unchecked exception
+            throw new RuntimeException("Error creating project '"+name+"'");
+        }
     }
 
     @Step
-    public void recreateProject(String projectName) {
-        projectUtils.recreateProject(projectName, getCurrentCredentials());
+    public void recreateProject(String name) {
+        deleteProjectIfItExists(name);
+        createProject(name);
     }
-
+    
     @Step
     public void changeProjectDisplayName(String projectName, String displayName) {
         Project project = getProjectInstanceFromAPI(projectName);
         project.setDisplayName(displayName);
-        Response response = projectService.putProject(projectName, project, getCurrentCredentials());
-        setLastResponse(response);
+        putProject(project);
     }
 
     @Step
     public void changeProjectDescription(String projectName, String description) {
         Project project = getProjectInstanceFromAPI(projectName);
         project.setDescription(description);
-        Response response = projectService.putProject(projectName, project, getCurrentCredentials());
-        setLastResponse(response);
+        putProject(project);
     }
 
     @Step
@@ -120,8 +135,14 @@ public class ProjectSteps extends BaseSteps {
         Assert.assertEquals("Project instance URL incorrect", Constants.BASE_URL + "projects/" + instance.getName(), instance.getUrl());
     }
     
-    private Project getProjectInstanceFromAPI(String projectName){
-        Response response = projectService.getProjectInstance(projectName, getCurrentCredentials());
+    @Step
+    public Project createProjectObject(String name, String displayName, String description){
+        Project project = new Project(name, displayName, description);
+        return project;
+    }
+    
+    private Project getProjectInstanceFromAPI(String name){
+        Response response = getProject(name);
         response.then().assertThat().statusCode(200);
         Project project = response.as(Project.class);
         return project;

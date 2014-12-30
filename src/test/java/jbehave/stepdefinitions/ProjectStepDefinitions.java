@@ -1,5 +1,6 @@
 package jbehave.stepdefinitions;
 
+import model.Project;
 import net.thucydides.core.annotations.Steps;
 
 import org.jbehave.core.annotations.Given;
@@ -19,7 +20,8 @@ public class ProjectStepDefinitions {
 
     @When("project $name is created (POST)")
     public void whenPostProject(@Named("name") String name) {
-        projectSteps.postProject(name);
+        Project p = projectSteps.createProjectObject(name, name, "This projectec created by automated test");
+        projectSteps.postProject(p);
     }
 
     @When("project $name is retrieved (GET)")
