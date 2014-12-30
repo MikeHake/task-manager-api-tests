@@ -1,11 +1,14 @@
-package jbehave.steps;
+package steplibrary;
+
 import com.jayway.restassured.response.Response;
 
 import model.Credentials;
 import net.thucydides.core.Thucydides;
+import net.thucydides.core.steps.ScenarioSteps;
 
+public class BaseSteps extends ScenarioSteps {
+    private static final long serialVersionUID = 1L;
 
-public class BaseSteps {
     protected static final String STORED_CREDENTIALS = "creds";
     protected static final String STORED_RESPONSE = "response";
     

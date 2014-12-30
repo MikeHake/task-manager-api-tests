@@ -1,30 +1,30 @@
-package jbehave.steps;
+package jbehave.stepdefinitions;
 
-import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import model.Credentials;
+import net.thucydides.core.annotations.Steps;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 
-import com.jayway.restassured.response.Response;
+import steplibrary.CommonSteps;
 
-public class CommonSteps extends BaseSteps {
+public class CommonStepDefinitions {
+    
+    @Steps
+    CommonSteps commonSteps;
+    
 
     @Given("using credentials $user:$password")
     @When("using credentials $user:$password")
     @Then("using credentials $user:$password")
     public void usingCredentials(@Named("user") String user, @Named("password") String password) {
-        Credentials creds = new Credentials(user,password);
-        setCurrentCredentials(creds);
+        commonSteps.setCredentials(user, password);
     }
     
     @Then("the response status code is $status")
     public void thenResponseStatusIs(@Named("status") int status) {
-        Response response = getLastResponse();
-        Assert.assertEquals(status, response.getStatusCode());
+        commonSteps.verifyLastResponseStatus(status);
     }
     
     /**
@@ -34,8 +34,7 @@ public class CommonSteps extends BaseSteps {
      */
     @Then("the response status is $status and the response body conforms to schema $schema")
     public void thenVerifyResponseCodeAndSchema(@Named("status") int status, @Named("schema") String schema) {
-        Response response = getLastResponse();
-        Assert.assertEquals(status, response.getStatusCode());
-        response.then().assertThat().body(matchesJsonSchemaInClasspath(schema));
+        commonSteps.verifyLastResponseStatus(status);
+        commonSteps.verifyLastResponseBodySchema(schema);
     }
 }
