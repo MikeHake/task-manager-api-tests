@@ -9,11 +9,8 @@ import org.junit.Assert;
 
 import com.jayway.restassured.response.Response;
 
-public class ProjectTaskSteps extends BaseSteps {
+public class ProjectTaskSteps extends ThucydidesRestAssuredTestSteps {
     private static final long serialVersionUID = 1L;
-
-    public static final String TASK_INSTANCE_URL = "/projects/{name}/tasks/{id}";
-    public static final String TASK_COLLECTION_URL = "/projects/{name}/tasks";
 
     @Step
     public Response postTask(Task task, String projectName) {
@@ -29,7 +26,6 @@ public class ProjectTaskSteps extends BaseSteps {
     public Response getTaskCollection(String projectName) {
         return doGet(TASK_COLLECTION_URL,projectName);
     }
-    
     
     @Step
     public Task createTaskObject(String taskTitle, String taskDescription){

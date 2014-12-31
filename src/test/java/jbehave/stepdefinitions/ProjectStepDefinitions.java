@@ -12,9 +12,11 @@ import steplibrary.CommonSteps;
 import steplibrary.ProjectSteps;
 
 public class ProjectStepDefinitions {
+
+    // Step library classes injected by Thucydides
     @Steps
     ProjectSteps projectSteps;
-    
+
     @Steps
     CommonSteps commonSteps;
 
@@ -41,7 +43,7 @@ public class ProjectStepDefinitions {
 
     @Given("the project $name does not exist")
     public void givenProjectDoesNotExist(@Named("name") String name) {
-        projectSteps.deleteProjectIfItExists(name);
+        projectSteps.deleteProject(name);
     }
 
     @Then("project $name is not found")

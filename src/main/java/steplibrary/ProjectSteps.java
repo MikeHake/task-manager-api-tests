@@ -9,12 +9,9 @@ import org.junit.Assert;
 
 import com.jayway.restassured.response.Response;
 
-public class ProjectSteps extends BaseSteps {
+public class ProjectSteps extends ThucydidesRestAssuredTestSteps {
     private static final long serialVersionUID = 1L;
     
-    public static final String PROJECT_INSTANCE_URL = "/projects/{name}";
-    public static final String PROJECT_COLLECTION_URL = "/projects";
-
     @Step
     public Response postProject(Project project) {
         return doPost(project, PROJECT_COLLECTION_URL);
@@ -41,16 +38,6 @@ public class ProjectSteps extends BaseSteps {
     }
 
     @Step
-    public void deleteProjectIfItExists(String name) {
-        Response response = deleteProject(name);
-        if(response.statusCode()!=204){
-            // something has gone wrong.
-            // Calling code should not try to recover so throw unchecked exception
-            throw new RuntimeException("Error ensuring project '"+name+"' does not exist");
-        }
-    }
-
-    @Step
     public void createProjectIfDoesNotExist(String name) {
         Response response =  getProject(name);
         if(response.getStatusCode()!=200){
@@ -71,7 +58,7 @@ public class ProjectSteps extends BaseSteps {
 
     @Step
     public void recreateProject(String name) {
-        deleteProjectIfItExists(name);
+        deleteProject(name);
         createProject(name);
     }
     
@@ -141,6 +128,10 @@ public class ProjectSteps extends BaseSteps {
         return project;
     }
     
+    /**
+     * Make API call and convert the Response to a Project Object.
+     * This is useful when verifying test results
+     */
     private Project getProjectInstanceFromAPI(String name){
         Response response = getProject(name);
         response.then().assertThat().statusCode(200);

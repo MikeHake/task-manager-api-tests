@@ -9,14 +9,9 @@ import org.junit.Assert;
 
 import com.jayway.restassured.response.Response;
 
-public class ProjectMembersSteps extends BaseSteps{
+public class ProjectMembersSteps extends ThucydidesRestAssuredTestSteps{
     private static final long serialVersionUID = 1L;
 
-    public static final String MEMBER_INSTANCE_URL = "/projects/{projectName}/members/{memberName}";
-    public static final String MEMBER_COLLECTION_URL = "/projects/{projectName}/members";
-    public static final String ADMIN_INSTANCE_URL = "/projects/{projectName}/admins/{memberName}";
-    public static final String ADMIN_COLLECTION_URL = "/projects/{projectName}/admins";
-    
     @Step
     public Response putMember(String userName,String projectName) {
         return doPut(null, MEMBER_INSTANCE_URL, projectName, userName);

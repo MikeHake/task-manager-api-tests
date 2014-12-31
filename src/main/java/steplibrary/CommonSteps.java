@@ -8,7 +8,7 @@ import org.junit.Assert;
 
 import com.jayway.restassured.response.Response;
 
-public class CommonSteps extends BaseSteps{
+public class CommonSteps extends ThucydidesRestAssuredTestSteps{
     private static final long serialVersionUID = 1L;
 
     @Step

@@ -10,10 +10,10 @@ import org.jbehave.core.annotations.When;
 import steplibrary.CommonSteps;
 
 public class CommonStepDefinitions {
-    
+
+    // Step library classes injected by Thucydides
     @Steps
     CommonSteps commonSteps;
-    
 
     @Given("using credentials $user:$password")
     @When("using credentials $user:$password")
@@ -21,14 +21,15 @@ public class CommonStepDefinitions {
     public void usingCredentials(@Named("user") String user, @Named("password") String password) {
         commonSteps.setCredentials(user, password);
     }
-    
+
     @Then("the response status code is $status")
     public void thenResponseStatusIs(@Named("status") int status) {
         commonSteps.verifyLastResponseStatus(status);
     }
-    
+
     /**
      * Check both the status code and the structure of the response body
+     * 
      * @param status
      * @param schema
      */

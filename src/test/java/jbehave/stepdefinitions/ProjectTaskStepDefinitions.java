@@ -12,6 +12,7 @@ import steplibrary.ProjectTaskSteps;
 
 public class ProjectTaskStepDefinitions {
 
+    // Step library classes injected by Thucydides
     @Steps
     ProjectTaskSteps projectTaskSteps;
 
