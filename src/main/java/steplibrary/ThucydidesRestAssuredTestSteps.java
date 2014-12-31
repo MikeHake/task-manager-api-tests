@@ -19,6 +19,17 @@ import net.thucydides.core.steps.ScenarioSteps;
  */
 public class ThucydidesRestAssuredTestSteps extends ScenarioSteps {
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * I dont like having the test system URL hard coded here. I would expect that Rest Assured,
+     * JBehave, or Thucydides would have a standard way to specify this at the
+     * command line or a properties file. So far have not found that standard way 
+     */
+    public static String TARGET_BASE_URI  = "http://localhost";
+    public static int    TARGET_PORT      = 8080;
+    public static String TARGET_BASE_PATH = "task-manager-jee/v1";
+    
+    public static String FULL_BASE_PATH   = TARGET_BASE_URI +":"+TARGET_PORT+"/"+TARGET_BASE_PATH;
 
     public static final String STORED_CREDENTIALS = "creds";
     public static final String STORED_RESPONSE = "response";
@@ -50,9 +61,9 @@ public class ThucydidesRestAssuredTestSteps extends ScenarioSteps {
      * important to me so I will just hard code here.
      */
     static {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8080;
-        RestAssured.basePath = "jee-example-task-app/v1";
+        RestAssured.baseURI = TARGET_BASE_URI;
+        RestAssured.port = TARGET_PORT;
+        RestAssured.basePath = TARGET_BASE_PATH;
     }
     
     /**

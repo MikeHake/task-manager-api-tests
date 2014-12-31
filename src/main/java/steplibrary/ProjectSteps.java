@@ -1,6 +1,5 @@
 package steplibrary;
 
-import model.Constants;
 import model.Project;
 import model.ProjectCollection;
 import net.thucydides.core.annotations.Step;
@@ -109,9 +108,9 @@ public class ProjectSteps extends ThucydidesRestAssuredTestSteps {
         Response response = getLastResponse();
         response.then().assertThat().statusCode(200);
         ProjectCollection collection = response.as(ProjectCollection.class);
-        Assert.assertEquals("Project collection URL incorrect", Constants.BASE_URL + "projects", collection.getUrl());
+        Assert.assertEquals("Project collection URL incorrect",FULL_BASE_PATH + "/projects", collection.getUrl());
         for (Project project : collection.getItems()) {
-            Assert.assertEquals("Project instance URL incorrect", Constants.BASE_URL + "projects/" + project.getName(), project.getUrl());
+            Assert.assertEquals("Project instance URL incorrect", FULL_BASE_PATH + "/projects/" + project.getName(), project.getUrl());
         }
     }
 
@@ -119,7 +118,7 @@ public class ProjectSteps extends ThucydidesRestAssuredTestSteps {
     public void verifyProjectInstanceURL() {
         Response response = getLastResponse();
         Project instance = response.as(Project.class);
-        Assert.assertEquals("Project instance URL incorrect", Constants.BASE_URL + "projects/" + instance.getName(), instance.getUrl());
+        Assert.assertEquals("Project instance URL incorrect", FULL_BASE_PATH + "/projects/" + instance.getName(), instance.getUrl());
     }
     
     @Step

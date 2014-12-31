@@ -1,6 +1,5 @@
 package steplibrary;
 
-import model.Constants;
 import model.Task;
 import model.TaskCollection;
 import net.thucydides.core.annotations.Step;
@@ -72,9 +71,9 @@ public class ProjectTaskSteps extends ThucydidesRestAssuredTestSteps {
         response.then().assertThat().statusCode(200);
         TaskCollection collection = response.as(TaskCollection.class);
         String projectName = collection.getItems().get(0).getProject();
-        Assert.assertEquals("Task collection URL incorrect", Constants.BASE_URL + "projects/" + projectName + "/tasks", collection.getUrl());
+        Assert.assertEquals("Task collection URL incorrect", FULL_BASE_PATH + "/projects/" + projectName + "/tasks", collection.getUrl());
         for (Task task : collection.getItems()) {
-            Assert.assertEquals("Task instance URL incorrect", Constants.BASE_URL + "projects/" + projectName + "/tasks/" + task.getId(),
+            Assert.assertEquals("Task instance URL incorrect", FULL_BASE_PATH + "/projects/" + projectName + "/tasks/" + task.getId(),
                     task.getUrl());
         }
     }
@@ -83,7 +82,7 @@ public class ProjectTaskSteps extends ThucydidesRestAssuredTestSteps {
     public void verifyTaskInstanceURL() {
         Response response = getLastResponse();
         Task instance = response.as(Task.class);
-        Assert.assertEquals("Task instance URL incorrect", Constants.BASE_URL + "projects/" + instance.getProject() + "/tasks/" + instance.getId(),
+        Assert.assertEquals("Task instance URL incorrect", FULL_BASE_PATH + "/projects/" + instance.getProject() + "/tasks/" + instance.getId(),
                 instance.getUrl());
     }
 
