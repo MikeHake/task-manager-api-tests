@@ -2,7 +2,6 @@ package steplibrary;
 
 import static com.jayway.restassured.RestAssured.given;
 
-import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -20,50 +19,51 @@ import net.thucydides.core.steps.ScenarioSteps;
 public class ThucydidesRestAssuredTestSteps extends ScenarioSteps {
     private static final long serialVersionUID = 1L;
     
-    /**
-     * I dont like having the test system URL hard coded here. I would expect that Rest Assured,
-     * JBehave, or Thucydides would have a standard way to specify this at the
-     * command line or a properties file. So far have not found that standard way 
-     */
-    public static String TARGET_BASE_URI  = "http://localhost";
-    public static int    TARGET_PORT      = 8080;
-    public static String TARGET_BASE_PATH = "task-manager-jee/v1";
-    
-    public static String FULL_BASE_PATH   = TARGET_BASE_URI +":"+TARGET_PORT+"/"+TARGET_BASE_PATH;
-
     public static final String STORED_CREDENTIALS = "creds";
     public static final String STORED_RESPONSE = "response";
     
     /**
-     * The relative URL paths that will be used in the REST Assured
+     * The URL paths that will be used in the REST Assured
      * calls to get, post, put, delete.
      */
-    public static final String PROJECT_INSTANCE_URL     = "/projects/{name}";
-    public static final String PROJECT_COLLECTION_URL   = "/projects";
-    public static final String MEMBER_INSTANCE_URL      = "/projects/{projectName}/members/{memberName}";
-    public static final String MEMBER_COLLECTION_URL    = "/projects/{projectName}/members";
-    public static final String ADMIN_INSTANCE_URL       = "/projects/{projectName}/admins/{memberName}";
-    public static final String ADMIN_COLLECTION_URL     = "/projects/{projectName}/admins";
-    public static final String TASK_INSTANCE_URL        = "/projects/{name}/tasks/{id}";
-    public static final String TASK_COLLECTION_URL      = "/projects/{name}/tasks";
+    public static final String PROJECT_INSTANCE     = "/projects/{name}";
+    public static final String PROJECT_COLLECTION   = "/projects";
+    public static final String MEMBER_INSTANCE      = "/projects/{projectName}/members/{memberName}";
+    public static final String MEMBER_COLLECTION    = "/projects/{projectName}/members";
+    public static final String ADMIN_INSTANCE       = "/projects/{projectName}/admins/{memberName}";
+    public static final String ADMIN_COLLECTION     = "/projects/{projectName}/admins";
+    public static final String TASK_INSTANCE        = "/projects/{name}/tasks/{id}";
+    public static final String TASK_COLLECTION      = "/projects/{name}/tasks";
     
     /**
-     * Static initializer block to configure the base URL that RestAssured
-     * will use. I dont like this solution as I would prefer to set this in
-     * a config file or pass it at the command line. However I have not been
-     * able to identify any built in functionality in Rest Assured, JBehave,
-     * or Thucydides that allows setting user defined properties. 
-     * 
-     * If it were important to me to be able to execute these tests against
-     * different target systems I would define my own properties file for these
-     * and implement logic to first look for environment variables, and then
-     * fall back to the properties file. However at the moment that is not 
-     * important to me so I will just hard code here.
+     * These will all get initialized with the full path in the constructor 
      */
-    static {
-        RestAssured.baseURI = TARGET_BASE_URI;
-        RestAssured.port = TARGET_PORT;
-        RestAssured.basePath = TARGET_BASE_PATH;
+    public String BASE_PATH;
+    public String PROJECT_INSTANCE_URL;
+    public String PROJECT_COLLECTION_URL;
+    public String MEMBER_INSTANCE_URL;
+    public String MEMBER_COLLECTION_URL;
+    public String ADMIN_INSTANCE_URL;
+    public String ADMIN_COLLECTION_URL;
+    public String TASK_INSTANCE_URL;
+    public String TASK_COLLECTION_URL;
+    
+    public ThucydidesRestAssuredTestSteps(){
+        /*
+         * Initialize the value for the URL of the test system. A better way to do this would
+         * be to read it from a property file or environment variable. But for now just hardcoding
+         * it here will work for the purpose of this example. 
+         */
+        BASE_PATH = "http://localhost:8080/task-manager-jee/v1";
+        
+        PROJECT_INSTANCE_URL     = BASE_PATH + PROJECT_INSTANCE;
+        PROJECT_COLLECTION_URL   = BASE_PATH + PROJECT_COLLECTION;
+        MEMBER_INSTANCE_URL      = BASE_PATH + MEMBER_INSTANCE;
+        MEMBER_COLLECTION_URL    = BASE_PATH + MEMBER_COLLECTION;
+        ADMIN_INSTANCE_URL       = BASE_PATH + ADMIN_INSTANCE;
+        ADMIN_COLLECTION_URL     = BASE_PATH + ADMIN_COLLECTION;
+        TASK_INSTANCE_URL        = BASE_PATH + TASK_INSTANCE;
+        TASK_COLLECTION_URL      = BASE_PATH + TASK_COLLECTION;
     }
     
     /**
